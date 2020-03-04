@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.dao.ReattendMapper" >
+  <resultMap id="BaseResultMap" type="com.test.entity.Reattend" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="attend_id" property="attendId" jdbcType="INTEGER" />
+    <result column="attend_date" property="attendDate" jdbcType="DATE" />
+    <result column="reattend_userid" property="reattendUserid" jdbcType="INTEGER" />
+    <result column="reattend_chinesename" property="reattendChinesename" jdbcType="VARCHAR" />
+    <result column="reattend_morning" property="reattendMorning" jdbcType="TIME" />
+    <result column="reattend_evening" property="reattendEvening" jdbcType="TIME" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="handler" property="handler" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, attend_id, attend_date, reattend_userid, reattend_chinesename, reattend_morning, 
+    reattend_evening, reason, handler, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from reattend
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByAttendid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from reattend
+    where attend_id = #{attendid}
+  </select>
+
+  <select id="selectByUserid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from reattend
+    where reattend_userid = #{userid}
+  </select>
+
+  <select id="reattendCount" resultType="int" >
+    select
+    COUNT(*)
+    from reattend r
+    <if test="Status != null">
+      where r.status = #{Status}
+    </if>
+  </select>
+
+  <select id="selectListByStatus" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from reattend r
+    <if test="Status != null">
+      where r.status = #{Status}
+    </if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from reattend
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.test.entity.Reattend" >
+    insert into reattend (id, attend_id, attend_date, 
+      reattend_userid, reattend_chinesename, reattend_morning, 
+      reattend_evening, reason, handler, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{attendId,jdbcType=INTEGER}, #{attendDate,jdbcType=DATE}, 
+      #{reattendUserid,jdbcType=INTEGER}, #{reattendChinesename,jdbcType=VARCHAR}, #{reattendMorning,jdbcType=TIME}, 
+      #{reattendEvening,jdbcType=TIME}, #{reason,jdbcType=VARCHAR}, #{handler,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.entity.Reattend" >
+    insert into reattend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="attendId != null" >
+        attend_id,
+      </if>
+      <if test="attendDate != null" >
+        attend_date,
+      </if>
+      <if test="reattendUserid != null" >
+        reattend_userid,
+      </if>
+      <if test="reattendChinesename != null" >
+        reattend_chinesename,
+      </if>
+      <if test="reattendMorning != null" >
+        reattend_morning,
+      </if>
+      <if test="reattendEvening != null" >
+        reattend_evening,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="handler != null" >
+        handler,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="attendId != null" >
+        #{attendId,jdbcType=INTEGER},
+      </if>
+      <if test="attendDate != null" >
+        #{attendDate,jdbcType=DATE},
+      </if>
+      <if test="reattendUserid != null" >
+        #{reattendUserid,jdbcType=INTEGER},
+      </if>
+      <if test="reattendChinesename != null" >
+        #{reattendChinesename,jdbcType=VARCHAR},
+      </if>
+      <if test="reattendMorning != null" >
+        #{reattendMorning,jdbcType=TIME},
+      </if>
+      <if test="reattendEvening != null" >
+        #{reattendEvening,jdbcType=TIME},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="handler != null" >
+        #{handler,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.entity.Reattend" >
+    update reattend
+    <set >
+      <if test="attendId != null" >
+        attend_id = #{attendId,jdbcType=INTEGER},
+      </if>
+      <if test="attendDate != null" >
+        attend_date = #{attendDate,jdbcType=DATE},
+      </if>
+      <if test="reattendUserid != null" >
+        reattend_userid = #{reattendUserid,jdbcType=INTEGER},
+      </if>
+      <if test="reattendChinesename != null" >
+        reattend_chinesename = #{reattendChinesename,jdbcType=VARCHAR},
+      </if>
+      <if test="reattendMorning != null" >
+        reattend_morning = #{reattendMorning,jdbcType=TIME},
+      </if>
+      <if test="reattendEvening != null" >
+        reattend_evening = #{reattendEvening,jdbcType=TIME},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="handler != null" >
+        handler = #{handler,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.entity.Reattend" >
+    update reattend
+    set attend_id = #{attendId,jdbcType=INTEGER},
+      attend_date = #{attendDate,jdbcType=DATE},
+      reattend_userid = #{reattendUserid,jdbcType=INTEGER},
+      reattend_chinesename = #{reattendChinesename,jdbcType=VARCHAR},
+      reattend_morning = #{reattendMorning,jdbcType=TIME},
+      reattend_evening = #{reattendEvening,jdbcType=TIME},
+      reason = #{reason,jdbcType=VARCHAR},
+      handler = #{handler,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

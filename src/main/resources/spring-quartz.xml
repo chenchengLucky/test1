@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--执行体-->
+    <bean id="attendcheck" class="com.test.common.quartz.AttendCheck"></bean>
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="attendcheck"/>
+        <property name="targetMethod" value="check"/>
+    </bean>
+    <!--触发器-->
+    <bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="cronExpression">
+            <!--<value>0/30 * * * * ?</value>-->
+            <value>0 55 23 * * ? </value>
+        </property>
+    </bean>
+    <!--调度工厂-->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="trigger"/>
+            </list>
+        </property>
+    </bean>
+</beans>
